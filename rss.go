@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"sort"
 	"time"
 
 	"github.com/gorilla/feeds"
@@ -28,6 +29,8 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 	podcast := rss.New(5, true, chanHandler, makeHandler(master))
 	podcast.Fetch("http://simplecast.fm/podcasts/271/rss", nil)
 
+	sort.Sort(ByCreated(master.Items))
+
 	result, _ := master.ToAtom()
 	fmt.Fprintln(rw, result)
 }
@@ -38,7 +41,7 @@ func chanHandler(feed *rss.Feed, newchannels []*rss.Channel) {
 
 func makeHandler(master *feeds.Feed) rss.ItemHandlerFunc {
 	return func(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
-		for i := 0; i < len(items); i++ {
+		for i := 0; i < len(items) && i < 10; i++ {
 			published, _ := items[i].ParsedPubDate()
 
 			item := &feeds.Item{
@@ -51,4 +54,18 @@ func makeHandler(master *feeds.Feed) rss.ItemHandlerFunc {
 			master.Add(item)
 		}
 	}
+}
+
+type ByCreated []*feeds.Item
+
+func (s ByCreated) Len() int {
+	return len(s)
+}
+
+func (s ByCreated) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+
+func (s ByCreated) Less(i, j int) bool {
+	return s[j].Created.Before(s[i].Created)
 }
