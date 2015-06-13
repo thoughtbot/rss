@@ -1,7 +1,9 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"log"
 	"net/http"
 	"sort"
 	"time"
@@ -11,8 +13,10 @@ import (
 )
 
 func main() {
+	port := flag.String("port", "8080", "HTTP Port to listen on")
+	flag.Parse()
 	http.HandleFunc("/", rssHandler)
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(http.ListenAndServe(":"+*port, nil))
 }
 
 func rssHandler(rw http.ResponseWriter, r *http.Request) {
