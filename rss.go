@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/gorilla/feeds"
+	rss "github.com/jteeuwen/go-pkg-rss"
 )
 
 func main() {
@@ -14,7 +15,7 @@ func main() {
 }
 
 func rssHandler(rw http.ResponseWriter, r *http.Request) {
-	feed := &feeds.Feed{
+	master := &feeds.Feed{
 		Title:       "thoughtbot",
 		Link:        &feeds.Link{Href: "https://rss.thoughtbot.com"},
 		Description: "All the thoughts fit to bot.",
@@ -22,14 +23,30 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 		Created:     time.Now(),
 	}
 
-	item := &feeds.Item{
-		Title:       "HTTP Safety Doesn't Happen by Accident",
-		Link:        &feeds.Link{Href: "https://robots.thoughtbot.com/http-safety-doesnt-happen-by-accident"},
-		Description: "What are safe and unsafe HTTP methods, and why does it matter?",
-		Author:      &feeds.Author{Name: "George Brocklehurst"},
-	}
-	feed.Add(item)
+	blog := rss.New(5, true, chanHandler, makeHandler(master))
+	blog.Fetch("https://robots.thoughtbot.com/summaries.xml", nil)
 
-	result, _ := feed.ToAtom()
+	result, _ := master.ToAtom()
 	fmt.Fprintln(rw, result)
+}
+
+func chanHandler(feed *rss.Feed, newchannels []*rss.Channel) {
+	// no need to do anything...
+}
+
+func makeHandler(master *feeds.Feed) rss.ItemHandlerFunc {
+	return func(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
+		for i := 0; i < len(items); i++ {
+			published, _ := items[i].ParsedPubDate()
+
+			item := &feeds.Item{
+				Title:       items[i].Title,
+				Link:        &feeds.Link{Href: items[i].Links[0].Href},
+				Description: items[i].Description,
+				Author:      &feeds.Author{Name: items[i].Author.Name},
+				Created:     published,
+			}
+			master.Add(item)
+		}
+	}
 }
