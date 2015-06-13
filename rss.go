@@ -27,6 +27,7 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 	fetch("https://robots.thoughtbot.com/summaries.xml", master)
 	fetch("http://simplecast.fm/podcasts/271/rss", master)
 	fetch("http://simplecast.fm/podcasts/272/rss", master)
+	fetch("http://simplecast.fm/podcasts/282/rss", master)
 
 	sort.Sort(ByCreated(master.Items))
 
