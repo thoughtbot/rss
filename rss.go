@@ -25,6 +25,8 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 
 	blog := rss.New(5, true, chanHandler, makeHandler(master))
 	blog.Fetch("https://robots.thoughtbot.com/summaries.xml", nil)
+	podcast := rss.New(5, true, chanHandler, makeHandler(master))
+	podcast.Fetch("http://simplecast.fm/podcasts/271/rss", nil)
 
 	result, _ := master.ToAtom()
 	fmt.Fprintln(rw, result)
