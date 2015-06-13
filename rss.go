@@ -47,17 +47,20 @@ func chanHandler(feed *rss.Feed, newchannels []*rss.Channel) {
 
 func makeHandler(master *feeds.Feed) rss.ItemHandlerFunc {
 	return func(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
-		for i := 0; i < len(items) && i < 10; i++ {
+		for i := 0; i < len(items); i++ {
 			published, _ := items[i].ParsedPubDate()
+			weekAgo := time.Now().AddDate(0, 0, -7)
 
-			item := &feeds.Item{
-				Title:       items[i].Title,
-				Link:        &feeds.Link{Href: items[i].Links[0].Href},
-				Description: items[i].Description,
-				Author:      &feeds.Author{Name: items[i].Author.Name},
-				Created:     published,
+			if published.After(weekAgo) {
+				item := &feeds.Item{
+					Title:       items[i].Title,
+					Link:        &feeds.Link{Href: items[i].Links[0].Href},
+					Description: items[i].Description,
+					Author:      &feeds.Author{Name: items[i].Author.Name},
+					Created:     published,
+				}
+				master.Add(item)
 			}
-			master.Add(item)
 		}
 	}
 }
