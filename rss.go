@@ -24,15 +24,19 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 		Created:     time.Now(),
 	}
 
-	blog := rss.New(5, true, chanHandler, makeHandler(master))
-	blog.Fetch("https://robots.thoughtbot.com/summaries.xml", nil)
-	podcast := rss.New(5, true, chanHandler, makeHandler(master))
-	podcast.Fetch("http://simplecast.fm/podcasts/271/rss", nil)
+	fetch("https://robots.thoughtbot.com/summaries.xml", master)
+	fetch("http://simplecast.fm/podcasts/271/rss", master)
+	fetch("http://simplecast.fm/podcasts/272/rss", master)
 
 	sort.Sort(ByCreated(master.Items))
 
 	result, _ := master.ToAtom()
 	fmt.Fprintln(rw, result)
+}
+
+func fetch(uri string, master *feeds.Feed) {
+	fetcher := rss.New(5, true, chanHandler, makeHandler(master))
+	fetcher.Fetch(uri, nil)
 }
 
 func chanHandler(feed *rss.Feed, newchannels []*rss.Channel) {
