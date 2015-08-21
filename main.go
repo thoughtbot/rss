@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"regexp"
 	"sort"
 	"time"
 
@@ -57,7 +58,7 @@ func makeHandler(master *feeds.Feed) rss.ItemHandlerFunc {
 
 			if published.After(weekAgo) {
 				item := &feeds.Item{
-					Title:       items[i].Title,
+					Title:       stripPodcastEpisodePrefix(items[i].Title),
 					Link:        &feeds.Link{Href: items[i].Links[0].Href},
 					Description: items[i].Description,
 					Author:      &feeds.Author{Name: items[i].Author.Name},
@@ -81,4 +82,10 @@ func (s ByCreated) Swap(i, j int) {
 
 func (s ByCreated) Less(i, j int) bool {
 	return s[j].Created.Before(s[i].Created)
+}
+
+var podcastEpisodePrefix = regexp.MustCompile(`^\d+: `)
+
+func stripPodcastEpisodePrefix(s string) string {
+	return podcastEpisodePrefix.ReplaceAllString(s, "")
 }
