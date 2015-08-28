@@ -20,3 +20,14 @@ Run `bin/setup` to install the project's dependencies.
 
 If you add or update a dependency,
 run `godep save ./...` to vendor the changes.
+
+## Testing
+
+To test the `rss` package, run `go test ./...`.
+
+## Deployment
+
+The master branch on GitHub is automatically deployed
+to the `thoughtbot-rss` app on Heroku
+after the CI build passes.
+>>>>>>> 678d7fc... Set up CircleCI with Bernerd's best practices

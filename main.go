@@ -25,7 +25,7 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 		Title:       "thoughtbot",
 		Link:        &feeds.Link{Href: "https://rss.thoughtbot.com"},
 		Description: "All the thoughts fit to bot.",
-		Author:      &feeds.Author{"thoughtbot", "hello@thoughtbot.com"},
+		Author:      &feeds.Author{Name: "thoughtbot", Email: "hello@thoughtbot.com"},
 		Created:     time.Now(),
 	}
 
@@ -35,7 +35,7 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 	fetch("http://simplecast.fm/podcasts/282/rss", master)
 	fetch("http://simplecast.fm/podcasts/1088/rss", master)
 
-	sort.Sort(ByCreated(master.Items))
+	sort.Sort(byCreated(master.Items))
 
 	result, _ := master.ToAtom()
 	fmt.Fprintln(rw, result)
@@ -70,17 +70,17 @@ func makeHandler(master *feeds.Feed) rss.ItemHandlerFunc {
 	}
 }
 
-type ByCreated []*feeds.Item
+type byCreated []*feeds.Item
 
-func (s ByCreated) Len() int {
+func (s byCreated) Len() int {
 	return len(s)
 }
 
-func (s ByCreated) Swap(i, j int) {
+func (s byCreated) Swap(i, j int) {
 	s[i], s[j] = s[j], s[i]
 }
 
-func (s ByCreated) Less(i, j int) bool {
+func (s byCreated) Less(i, j int) bool {
 	return s[j].Created.Before(s[i].Created)
 }
 
