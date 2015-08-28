@@ -1,33 +1,45 @@
-# RSS
+RSS
+===
 
 > All the thoughts fit to bot.
 
-An RSS feed combining our blog's and podcasts' RSS feeds into
+An RSS feed at [rss.thoughtbot.com](http://rss.thoughtbot.com)
+which combines our blog's and podcasts' RSS feeds into
 one feed for the past week's worth of content.
 
 Used as the data source for our weekly newsletter.
 
-## Developing
+Contributing
+------------
 
-First you'll need a working [go installation],
-and project cloned into your [go work environment]
-(that is, `$GOPATH/src/github.com/thoughtbot/rss`).
+See the [CONTRIBUTING] document.
+Thank you, [contributors]!
 
-  [go installation]: http://golang.org/doc/install
-  [go work environment]: http://golang.org/doc/code.html
+  [CONTRIBUTING]: CONTRIBUTING.md
+  [contributors]: https://github.com/thoughtbot/rss/graphs/contributors
 
-Run `bin/setup` to install the project's dependencies.
+License
+-------
 
-If you add or update a dependency,
-run `godep save ./...` to vendor the changes.
+RSS is Copyright (c) 2015 thoughtbot, inc.
+It is free software,
+and may be redistributed under the terms specified in the [LICENSE] file.
 
-## Testing
+  [LICENSE]: /LICENSE
 
-To test the `rss` package, run `go test ./...`.
+About
+-----
 
-## Deployment
+RSS is maintained by Dan Croak and Bernerd Schaefer.
 
-The master branch on GitHub is automatically deployed
-to the `thoughtbot-rss` app on Heroku
-after the CI build passes.
->>>>>>> 678d7fc... Set up CircleCI with Bernerd's best practices
+![thoughtbot](https://thoughtbot.com/logo.png)
+
+RSS is maintained and funded by thoughtbot, inc.
+The names and logos for thoughtbot are trademarks of thoughtbot, inc.
+
+We love open source software!
+See [our other projects][community]
+or [hire us][hire] to help build your product.
+
+  [community]: https://thoughtbot.com/community?utm_source=github
+  [hire]: https://thoughtbot.com/hire-us?utm_source=github

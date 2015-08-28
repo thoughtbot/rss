@@ -1,6 +1,6 @@
 package feeder
 
-import xmlx "github.com/thoughtbot/rss/Godeps/_workspace/src/github.com/jteeuwen/go-pkg-xmlx"
+import xmlx "github.com/jteeuwen/go-pkg-xmlx"
 
 func (this *Feed) readAtom(doc *xmlx.Document) (err error) {
 	ns := "http://www.w3.org/2005/Atom"
