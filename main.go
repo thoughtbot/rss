@@ -34,6 +34,7 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 	fetch("http://simplecast.fm/podcasts/272/rss", master)
 	fetch("http://simplecast.fm/podcasts/282/rss", master)
 	fetch("http://simplecast.fm/podcasts/1088/rss", master)
+	fetch("https://upcase.com/the-weekly-iteration.rss", master)
 
 	sort.Sort(byCreated(master.Items))
 

@@ -20,7 +20,7 @@ and clone the project into your [Go work environment]
   [Go installation]: http://golang.org/doc/install
   [Go work environment]: http://golang.org/doc/code.html
 
-Run `bin/setup` to install the project's dependencies.
+Run `./bin/setup` to install the project's dependencies.
 
 If you add or update a dependency,
 run `godep save ./...` to vendor the changes.
@@ -28,6 +28,8 @@ run `godep save ./...` to vendor the changes.
 To test the `rss` package, run `go test ./...`.
 
 Make your change, with new passing tests.
+
+Run `go run main.go` to see the change at `localhost:8080` in a web browser.
 
 Push to your fork. Write a [good commit message][commit]. Submit a pull request.
 
