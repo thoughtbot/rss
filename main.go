@@ -29,12 +29,9 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 		Created:     time.Now(),
 	}
 
-	fetch("https://robots.thoughtbot.com/summaries.xml", master)
-	fetch("http://simplecast.fm/podcasts/271/rss", master)
-	fetch("http://simplecast.fm/podcasts/272/rss", master)
-	fetch("http://simplecast.fm/podcasts/282/rss", master)
-	fetch("http://simplecast.fm/podcasts/1088/rss", master)
-	fetch("https://upcase.com/the-weekly-iteration.rss", master)
+	for _, feed := range sourceFeeds {
+		fetch(feed, master)
+	}
 
 	sort.Sort(byCreated(master.Items))
 
@@ -42,16 +39,16 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(rw, result)
 }
 
-func fetch(uri string, master *feeds.Feed) {
-	fetcher := rss.New(5, true, chanHandler, makeHandler(master))
-	fetcher.Fetch(uri, nil)
+func fetch(feed sourceFeed, master *feeds.Feed) {
+	fetcher := rss.New(5, true, chanHandler, makeHandler(master, feed.name))
+	fetcher.Fetch(feed.uri, nil)
 }
 
 func chanHandler(feed *rss.Feed, newchannels []*rss.Channel) {
 	// no need to do anything...
 }
 
-func makeHandler(master *feeds.Feed) rss.ItemHandlerFunc {
+func makeHandler(master *feeds.Feed, sourceName string) rss.ItemHandlerFunc {
 	return func(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
 		for i := 0; i < len(items); i++ {
 			published, _ := items[i].ParsedPubDate()
@@ -62,7 +59,7 @@ func makeHandler(master *feeds.Feed) rss.ItemHandlerFunc {
 					Title:       stripPodcastEpisodePrefix(items[i].Title),
 					Link:        &feeds.Link{Href: items[i].Links[0].Href},
 					Description: items[i].Description,
-					Author:      &feeds.Author{Name: items[i].Author.Name},
+					Author:      &feeds.Author{Name: sourceName},
 					Created:     published,
 				}
 				master.Add(item)
@@ -72,6 +69,22 @@ func makeHandler(master *feeds.Feed) rss.ItemHandlerFunc {
 }
 
 type byCreated []*feeds.Item
+
+type sourceFeed struct {
+	uri  string
+	name string
+}
+
+// sourceFeeds defines the list of thoughtbot RSS feeds
+// to be combined into a master feed.
+var sourceFeeds = []sourceFeed{
+	{uri: "https://robots.thoughtbot.com/summaries.xml", name: "Giant Robots blog"},
+	{uri: "http://simplecast.fm/podcasts/271/rss", name: "Giant Robots podcast"},
+	{uri: "http://simplecast.fm/podcasts/272/rss", name: "Build Phase podcast"},
+	{uri: "http://simplecast.fm/podcasts/282/rss", name: "The Bike Shed podcast"},
+	{uri: "http://simplecast.fm/podcasts/1088/rss", name: "Tentative podcast"},
+	{uri: "https://upcase.com/the-weekly-iteration.rss", name: "The Weekly Iteration videos"},
+}
 
 func (s byCreated) Len() int {
 	return len(s)
