@@ -29,14 +29,18 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 		Created:     time.Now(),
 	}
 
-	for _, feed := range sourceFeeds {
-		fetch(feed, master)
-	}
+	fetchFeeds(master)
 
 	sort.Sort(byCreated(master.Items))
 
 	result, _ := master.ToAtom()
 	fmt.Fprintln(rw, result)
+}
+
+func fetchFeeds(master *feeds.Feed) {
+	for _, feed := range sourceFeeds {
+		fetch(feed, master)
+	}
 }
 
 func fetch(feed sourceFeed, master *feeds.Feed) {

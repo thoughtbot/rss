@@ -1,6 +1,10 @@
 package main
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/gorilla/feeds"
+)
 
 func TestStripPodcastEpisodePrefix(t *testing.T) {
 	for _, tt := range []struct{ in, want string }{
@@ -13,5 +17,11 @@ func TestStripPodcastEpisodePrefix(t *testing.T) {
 		if got != tt.want {
 			t.Errorf("stripPodcastEpisodePrefix(%q) = %q; want %q", tt.in, got, tt.want)
 		}
+	}
+}
+
+func BenchmarkFetchFeeds(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		fetchFeeds(&feeds.Feed{})
 	}
 }

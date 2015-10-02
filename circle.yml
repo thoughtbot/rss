@@ -14,3 +14,4 @@ test:
     - bin/vet
   override:
     - godep go test ./...
+    - godep go test -bench=.
