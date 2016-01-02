@@ -41,7 +41,11 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 
 func fetch(feed sourceFeed, master *feeds.Feed) {
 	fetcher := rss.New(5, true, chanHandler, makeHandler(master, feed.name))
-	fetcher.Fetch(feed.uri, nil)
+	client := &http.Client{
+		Timeout: time.Second,
+	}
+
+	fetcher.FetchClient(feed.uri, client, nil)
 }
 
 func chanHandler(feed *rss.Feed, newchannels []*rss.Channel) {
