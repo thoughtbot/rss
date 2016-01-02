@@ -7,3 +7,19 @@ go get github.com/tools/godep
 
 # Restore dependencies from Godeps
 godep restore
+
+# Only if this isn't CI
+if [ -z "$CI" ]; then
+  # Set up deploys
+  if ! command -v heroku > /dev/null; then
+    printf 'Heroku Toolbelt is not installed.\n'
+    printf 'See https://toolbelt.heroku.com/ for install instructions.\n'
+    exit 1
+  fi
+
+  if heroku join --app thoughtbot-rss > /dev/null; then
+    git remote add production git@heroku.com:thoughtbot-rss.git > /dev/null
+  else
+    printf 'Ask for access to the "thoughtbot-rss" Heroku app\n'
+  fi
+fi
