@@ -40,9 +40,9 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 
 func fetchFeeds(master *feeds.Feed) {
 	var wg sync.WaitGroup
-	wg.Add(len(sourceFeeds))
 	for _, feed := range sourceFeeds {
 		go func(feed sourceFeed) {
+			wg.Add(1)
 			defer wg.Done()
 			fetch(feed, master)
 		}(feed)

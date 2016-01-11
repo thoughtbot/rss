@@ -18,7 +18,7 @@ if [ -z "$CI" ]; then
   fi
 
   if heroku join --app thoughtbot-rss > /dev/null; then
-    git remote add production git@heroku.com:thoughtbot-rss.git > /dev/null
+    git remote add production git@heroku.com:thoughtbot-rss.git 2> /dev/null
   else
     printf 'Ask for access to the "thoughtbot-rss" Heroku app\n'
   fi
