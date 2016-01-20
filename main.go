@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"regexp"
 	"sort"
+	"sync"
 	"time"
 
 	"github.com/gorilla/feeds"
@@ -38,16 +39,20 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 }
 
 func fetch() chan *feeds.Item {
-	jobs := make(chan *feeds.Item)
+	var wg sync.WaitGroup
+	jobs := make(chan *feeds.Item, len(sourceFeeds))
 	client := &http.Client{
 		Timeout: time.Second,
 	}
 	for _, feed := range sourceFeeds {
-		go func() {
+		wg.Add(1)
+		go func(feed sourceFeed) {
+			defer wg.Done()
 			fetcher := rss.New(1, true, chanHandler, makeHandler(feed.name, jobs))
 			fetcher.FetchClient(feed.uri, client, nil)
-		}()
+		}(feed)
 	}
+	wg.Wait()
 	return jobs
 }
 
