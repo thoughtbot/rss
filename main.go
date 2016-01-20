@@ -13,6 +13,17 @@ import (
 	rss "github.com/jteeuwen/go-pkg-rss"
 )
 
+var podcastEpisodePrefix = regexp.MustCompile(`^\d+: `)
+
+var sourceFeeds = []sourceFeed{
+	{uri: "https://robots.thoughtbot.com/summaries.xml", name: "Giant Robots blog"},
+	{uri: "http://simplecast.fm/podcasts/271/rss", name: "Giant Robots podcast"},
+	{uri: "http://simplecast.fm/podcasts/272/rss", name: "Build Phase podcast"},
+	{uri: "http://simplecast.fm/podcasts/282/rss", name: "The Bike Shed podcast"},
+	{uri: "http://simplecast.fm/podcasts/1088/rss", name: "Tentative podcast"},
+	{uri: "https://upcase.com/the-weekly-iteration.rss", name: "The Weekly Iteration videos"},
+}
+
 func main() {
 	port := flag.String("port", "8080", "HTTP Port to listen on")
 	flag.Parse()
@@ -72,24 +83,6 @@ func makeHandler(master *feeds.Feed, sourceName string) rss.ItemHandlerFunc {
 	}
 }
 
-type byCreated []*feeds.Item
-
-type sourceFeed struct {
-	uri  string
-	name string
-}
-
-// sourceFeeds defines the list of thoughtbot RSS feeds
-// to be combined into a master feed.
-var sourceFeeds = []sourceFeed{
-	{uri: "https://robots.thoughtbot.com/summaries.xml", name: "Giant Robots blog"},
-	{uri: "http://simplecast.fm/podcasts/271/rss", name: "Giant Robots podcast"},
-	{uri: "http://simplecast.fm/podcasts/272/rss", name: "Build Phase podcast"},
-	{uri: "http://simplecast.fm/podcasts/282/rss", name: "The Bike Shed podcast"},
-	{uri: "http://simplecast.fm/podcasts/1088/rss", name: "Tentative podcast"},
-	{uri: "https://upcase.com/the-weekly-iteration.rss", name: "The Weekly Iteration videos"},
-}
-
 func (s byCreated) Len() int {
 	return len(s)
 }
@@ -102,8 +95,13 @@ func (s byCreated) Less(i, j int) bool {
 	return s[j].Created.Before(s[i].Created)
 }
 
-var podcastEpisodePrefix = regexp.MustCompile(`^\d+: `)
-
 func stripPodcastEpisodePrefix(s string) string {
 	return podcastEpisodePrefix.ReplaceAllString(s, "")
+}
+
+type byCreated []*feeds.Item
+
+type sourceFeed struct {
+	uri  string
+	name string
 }
