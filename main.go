@@ -32,6 +32,26 @@ func main() {
 }
 
 func rssHandler(rw http.ResponseWriter, r *http.Request) {
+	jobs := fetch()
+	atomFeed := merge(jobs)
+	fmt.Fprintln(rw, atomFeed)
+}
+
+func fetch() chan *feeds.Item {
+	jobs := make(chan *feeds.Item)
+	client := &http.Client{
+		Timeout: time.Second,
+	}
+	for _, feed := range sourceFeeds {
+		go func() {
+			fetcher := rss.New(1, true, chanHandler, makeHandler(feed.name, jobs))
+			fetcher.FetchClient(feed.uri, client, nil)
+		}()
+	}
+	return jobs
+}
+
+func merge(jobs chan *feeds.Item) string {
 	master := &feeds.Feed{
 		Title:       "thoughtbot",
 		Link:        &feeds.Link{Href: "https://rss.thoughtbot.com"},
@@ -39,45 +59,38 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 		Author:      &feeds.Author{Name: "thoughtbot", Email: "hello@thoughtbot.com"},
 		Created:     time.Now(),
 	}
-
-	for _, feed := range sourceFeeds {
-		fetch(feed, master)
+	deadline := time.After(1 * time.Second)
+	for i := 0; i < len(sourceFeeds); i++ {
+		select {
+		case rssItem := <-jobs:
+			master.Add(rssItem)
+		case <-deadline:
+			// abort
+		}
 	}
-
 	sort.Sort(byCreated(master.Items))
-
-	result, _ := master.ToAtom()
-	fmt.Fprintln(rw, result)
-}
-
-func fetch(feed sourceFeed, master *feeds.Feed) {
-	fetcher := rss.New(5, true, chanHandler, makeHandler(master, feed.name))
-	client := &http.Client{
-		Timeout: time.Second,
-	}
-
-	fetcher.FetchClient(feed.uri, client, nil)
+	atomFeed, _ := master.ToAtom()
+	return atomFeed
 }
 
 func chanHandler(feed *rss.Feed, newchannels []*rss.Channel) {
 	// no need to do anything...
 }
 
-func makeHandler(master *feeds.Feed, sourceName string) rss.ItemHandlerFunc {
+func makeHandler(sourceName string, jobs chan *feeds.Item) rss.ItemHandlerFunc {
 	return func(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
 		for i := 0; i < len(items); i++ {
 			published, _ := items[i].ParsedPubDate()
 			weekAgo := time.Now().AddDate(0, 0, -7)
 
 			if published.After(weekAgo) {
-				item := &feeds.Item{
+				jobs <- &feeds.Item{
 					Title:       stripPodcastEpisodePrefix(items[i].Title),
 					Link:        &feeds.Link{Href: items[i].Links[0].Href},
 					Description: items[i].Description,
 					Author:      &feeds.Author{Name: sourceName},
 					Created:     published,
 				}
-				master.Add(item)
 			}
 		}
 	}
