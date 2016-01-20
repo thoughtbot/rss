@@ -59,7 +59,7 @@ func fetch() chan *feeds.Item {
 func merge(jobs chan *feeds.Item) string {
 	master := &feeds.Feed{
 		Title:       "thoughtbot",
-		Link:        &feeds.Link{Href: "https://rss.thoughtbot.com"},
+		Link:        &feeds.Link{Href: "http://rss.thoughtbot.com"},
 		Description: "All the thoughts fit to bot.",
 		Author:      &feeds.Author{Name: "thoughtbot", Email: "hello@thoughtbot.com"},
 		Created:     time.Now(),
