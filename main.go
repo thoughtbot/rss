@@ -27,27 +27,29 @@ var sourceFeeds = []sourceFeed{
 func main() {
 	port := flag.String("port", "8080", "HTTP Port to listen on")
 	flag.Parse()
-	http.HandleFunc("/", rssHandler)
+	http.Handle("/", rssHandler(sourceFeeds))
 	log.Fatal(http.ListenAndServe(":"+*port, nil))
 }
 
-func rssHandler(rw http.ResponseWriter, r *http.Request) {
-	master := &feeds.Feed{
-		Title:       "thoughtbot",
-		Link:        &feeds.Link{Href: "https://rss.thoughtbot.com"},
-		Description: "All the thoughts fit to bot.",
-		Author:      &feeds.Author{Name: "thoughtbot", Email: "hello@thoughtbot.com"},
-		Created:     time.Now(),
-	}
+func rssHandler(sourceFeeds []sourceFeed) http.Handler {
+	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		master := &feeds.Feed{
+			Title:       "thoughtbot",
+			Link:        &feeds.Link{Href: "https://rss.thoughtbot.com"},
+			Description: "All the thoughts fit to bot.",
+			Author:      &feeds.Author{Name: "thoughtbot", Email: "hello@thoughtbot.com"},
+			Created:     time.Now(),
+		}
 
-	for _, feed := range sourceFeeds {
-		fetch(feed, master)
-	}
+		for _, feed := range sourceFeeds {
+			fetch(feed, master)
+		}
 
-	sort.Sort(byCreated(master.Items))
+		sort.Sort(byCreated(master.Items))
 
-	result, _ := master.ToAtom()
-	fmt.Fprintln(rw, result)
+		result, _ := master.ToAtom()
+		fmt.Fprintln(rw, result)
+	})
 }
 
 func fetch(feed sourceFeed, master *feeds.Feed) {
