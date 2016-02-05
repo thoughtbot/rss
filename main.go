@@ -40,44 +40,52 @@ func rssHandler(rw http.ResponseWriter, r *http.Request) {
 		Created:     time.Now(),
 	}
 
+	itemCh := make(chan *feeds.Item)
 	for _, feed := range sourceFeeds {
-		fetch(feed, master)
+		go fetch(feed, itemCh)
 	}
+	addItems(itemCh, master)
 
 	sort.Sort(byCreated(master.Items))
-
 	result, _ := master.ToAtom()
 	fmt.Fprintln(rw, result)
 }
 
-func fetch(feed sourceFeed, master *feeds.Feed) {
-	fetcher := rss.New(5, true, chanHandler, makeHandler(master, feed.name))
-	client := &http.Client{
-		Timeout: time.Second,
+func addItems(itemCh chan *feeds.Item, master *feeds.Feed) {
+	timeout := time.After(3 * time.Second)
+	for {
+		select {
+		case item := <-itemCh:
+			master.Add(item)
+		case <-timeout:
+			return
+		}
 	}
+}
 
-	fetcher.FetchClient(feed.uri, client, nil)
+func fetch(feed sourceFeed, itemCh chan *feeds.Item) {
+	fetcher := rss.New(5, true, chanHandler, makeHandler(feed.name, itemCh))
+	fetcher.Fetch(feed.uri, nil)
 }
 
 func chanHandler(feed *rss.Feed, newchannels []*rss.Channel) {
 	// no need to do anything...
 }
 
-func makeHandler(master *feeds.Feed, sourceName string) rss.ItemHandlerFunc {
+func makeHandler(sourceName string, itemCh chan *feeds.Item) rss.ItemHandlerFunc {
 	return func(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
 		for i := 0; i < len(items); i++ {
 			published, _ := items[i].ParsedPubDate()
 			weekAgo := time.Now().AddDate(0, 0, -7)
 
 			if published.After(weekAgo) {
-				item := &feeds.Item{
+				itemCh <- &feeds.Item{
 					Title:       stripPodcastEpisodePrefix(items[i].Title),
 					Link:        &feeds.Link{Href: items[i].Links[0].Href},
 					Description: items[i].Description,
 					Author:      &feeds.Author{Name: sourceName},
 					Created:     published,
 				}
-				master.Add(item)
 			}
 		}
 	}
