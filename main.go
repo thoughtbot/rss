@@ -22,6 +22,12 @@ var sourceFeeds = []sourceFeed{
 	{uri: "http://simplecast.fm/podcasts/282/rss", name: "The Bike Shed podcast"},
 	{uri: "http://simplecast.fm/podcasts/1088/rss", name: "Tentative podcast"},
 	{uri: "https://upcase.com/the-weekly-iteration.rss", name: "The Weekly Iteration videos"},
+	{uri: "https://github.com/thoughtbot/bourbon/releases.atom", name: "bourbon release"},
+	{uri: "https://github.com/thoughtbot/clearance/releases.atom", name: "clearance release"},
+	{uri: "https://github.com/thoughtbot/factory_girl/releases.atom", name: "factory_girl release"},
+	{uri: "https://github.com/thoughtbot/high_voltage/releases.atom", name: "high_voltage release"},
+	{uri: "https://github.com/thoughtbot/paperclip/releases.atom", name: "paperclip release"},
+	{uri: "https://github.com/thoughtbot/suspenders/releases.atom", name: "suspenders release"},
 }
 
 func main() {
