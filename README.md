@@ -32,14 +32,14 @@ About
 
 RSS is maintained by Dan Croak and Bernerd Schaefer.
 
-![thoughtbot](https://thoughtbot.com/logo.png)
+[![thoughtbot](https://thoughtbot.com/logo.png)][go]
 
 RSS is maintained and funded by thoughtbot, inc.
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
 
 We love open source software!
-See [our other projects][community]
+See [our other Go projects][go]
 or [hire us][hire] to help build your product.
 
-  [community]: https://thoughtbot.com/community?utm_source=github
+  [go]: https://thoughtbot.com/services/go?utm_source=github
   [hire]: https://thoughtbot.com/hire-us?utm_source=github
