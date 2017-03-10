@@ -32,7 +32,7 @@ About
 
 RSS is maintained by Dan Croak and Bernerd Schaefer.
 
-[![thoughtbot](https://thoughtbot.com/logo.png)][go]
+[![thoughtbot](http://presskit.thoughtbot.com/images/thoughtbot-logo-for-readmes.svg)][go]
 
 RSS is maintained and funded by thoughtbot, inc.
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
