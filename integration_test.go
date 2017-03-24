@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -95,6 +96,9 @@ func newFeedServer(routes map[string]*feeds.Feed) *httptest.Server {
 			return
 		}
 
-		feed.WriteRss(w)
+		err := feed.WriteRss(w)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}))
 }

@@ -33,7 +33,7 @@ func main() {
 }
 
 func rssHandler(sourceFeeds []sourceFeed) http.Handler {
-	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		master := &feeds.Feed{
 			Title:       "thoughtbot",
 			Link:        &feeds.Link{Href: "https://rss.thoughtbot.com"},
@@ -48,8 +48,19 @@ func rssHandler(sourceFeeds []sourceFeed) http.Handler {
 
 		sort.Sort(byCreated(master.Items))
 
-		result, _ := master.ToAtom()
-		fmt.Fprintln(rw, result)
+		result, err := master.ToAtom()
+		if err != nil {
+			log.Printf("error generating feed: %v", err)
+			http.Error(w, "error generating feed", http.StatusInternalServerError)
+			return
+		}
+
+		_, err = fmt.Fprintln(w, result)
+		if err != nil {
+			log.Printf("error printing feed: %v", err)
+			http.Error(w, "error printing feed", http.StatusInternalServerError)
+			return
+		}
 	})
 }
 
@@ -59,7 +70,10 @@ func fetch(feed sourceFeed, master *feeds.Feed) {
 		Timeout: time.Second,
 	}
 
-	fetcher.FetchClient(feed.uri, client, nil)
+	err := fetcher.FetchClient(feed.uri, client, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func chanHandler(feed *rss.Feed, newchannels []*rss.Channel) {
@@ -69,7 +83,12 @@ func chanHandler(feed *rss.Feed, newchannels []*rss.Channel) {
 func makeHandler(master *feeds.Feed, sourceName string) rss.ItemHandlerFunc {
 	return func(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
 		for i := 0; i < len(items); i++ {
-			published, _ := items[i].ParsedPubDate()
+			published, err := items[i].ParsedPubDate()
+			if err != nil {
+				log.Printf("error parsing publication date: %v", err)
+				continue
+			}
+
 			weekAgo := time.Now().AddDate(0, 0, -7)
 
 			if published.After(weekAgo) {
