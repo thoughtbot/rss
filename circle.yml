@@ -1,16 +1,20 @@
+# See https://robots.thoughtbot.com/configure-circleci-for-go
+dependencies:
+  override:
+    - mkdir -p "$MYGOPATH/src/$IMPORT_PATH"
+    - rsync -azC --delete ./ "$MYGOPATH/src/$IMPORT_PATH/"
+    - go get -t -d -v ./...
+    - go build -v ./...
+  pre:
+    - go get github.com/tools/godep
+
 machine:
   environment:
     IMPORT_PATH: "github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
-
-dependencies:
-  pre:
-    - go get github.com/tools/godep
-  override:
-    - mkdir -p "$GOPATH/src/$IMPORT_PATH"
-    - rsync -azC --delete ./ "$GOPATH/src/$IMPORT_PATH/"
+    MYGOPATH: "$(echo $GOPATH | cut -d : -f 1)"
 
 test:
-  pre:
-    - bin/vet
   override:
-    - godep go test ./...
+    - godep go test -v -race ./...
+  pre:
+    - cd $MYGOPATH/src/$IMPORT_PATH && bin/vet
