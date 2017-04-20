@@ -23,9 +23,9 @@ and clone the project into your [Go work environment]
 Run `./bin/setup` to install the project's dependencies.
 
 If you add or update a dependency,
-run `godep save ./...` to vendor the changes.
+run `./bin/setup` again to vendor the changes.
 
-To test the `rss` package, run `go test ./...`.
+To test the `rss` package, run `govendor test +local`.
 
 Make your change, with new passing tests.
 

@@ -1,0 +1,25 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "Biz2c0OxOX2qeMLc66oeHlsg4K8=",
+			"path": "github.com/gorilla/feeds",
+			"revision": "441264de03a8117ed530ae8e049d8f601a33a099",
+			"revisionTime": "2016-02-07T16:22:05Z"
+		},
+		{
+			"checksumSHA1": "0BML3eN8Nu7aMthd0H6Ze9WwNcs=",
+			"path": "github.com/jteeuwen/go-pkg-rss",
+			"revision": "72391e6fd7384785fa3c46a405214a616d6c4a1d",
+			"revisionTime": "2015-12-01T01:30:05Z"
+		},
+		{
+			"checksumSHA1": "XFra3ZlOkhp/C8FUxTuQnkitKI8=",
+			"path": "github.com/jteeuwen/go-pkg-xmlx",
+			"revision": "76f54ee73233b171ca9ee82ef837a1fc4d3809c0",
+			"revisionTime": "2015-12-01T01:29:46Z"
+		}
+	],
+	"rootPath": "github.com/thoughtbot/rss"
+}

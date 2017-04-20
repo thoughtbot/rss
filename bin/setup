@@ -2,11 +2,12 @@
 
 set -e
 
-# Install godep
-go get github.com/tools/godep
+# Install and initialize govendor
+go get -u github.com/kardianos/govendor
+govendor init
 
-# Restore dependencies from Godeps
-godep restore
+# Update Go dependencies
+govendor sync
 
 # Only if this isn't CI
 if [ -z "$CI" ]; then
