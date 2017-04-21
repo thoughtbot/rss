@@ -33,7 +33,17 @@ func main() {
 }
 
 func rssHandler(sourceFeeds []sourceFeed) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+		if req.Host == "rss.thoughtbot.com" && req.URL.Scheme != "https" {
+			http.Redirect(
+				w,
+				req,
+				"https://rss.thoughtbot.com/",
+				http.StatusMovedPermanently,
+			)
+			return
+		}
+
 		master := &feeds.Feed{
 			Title:       "thoughtbot",
 			Link:        &feeds.Link{Href: "https://rss.thoughtbot.com"},
