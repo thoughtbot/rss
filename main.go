@@ -34,7 +34,7 @@ func main() {
 
 func rssHandler(sourceFeeds []sourceFeed) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-		if req.Host == "rss.thoughtbot.com" && req.URL.Scheme != "https" {
+		if req.Referer() == "http://rss.thoughtbot.com" {
 			http.Redirect(
 				w,
 				req,
