@@ -34,13 +34,11 @@ func main() {
 
 func rssHandler(sourceFeeds []sourceFeed) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-		if req.Referer() == "http://rss.thoughtbot.com" {
-			http.Redirect(
-				w,
-				req,
-				"https://rss.thoughtbot.com/",
-				http.StatusMovedPermanently,
-			)
+		if req.Header.Get("X-Forwarded-Proto") == "http" {
+			destination := *req.URL
+			destination.Host = req.Host
+			destination.Scheme = "https"
+			http.Redirect(w, req, destination.String(), http.StatusFound)
 			return
 		}
 
