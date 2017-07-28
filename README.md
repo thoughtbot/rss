@@ -3,9 +3,9 @@ RSS
 
 > All the thoughts fit to bot.
 
-An RSS feed at [rss.thoughtbot.com](http://rss.thoughtbot.com)
-which combines our blog's and podcasts' RSS feeds into
-one feed for the past week's worth of content.
+An RSS feed at [rss.thoughtbot.com](https://rss.thoughtbot.com)
+which combines our blog's, podcasts', and open source software releases'
+RSS feeds into one feed for the past week's worth of content.
 
 Used as the data source for our weekly newsletter.
 
