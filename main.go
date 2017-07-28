@@ -80,7 +80,7 @@ func fetch(feed sourceFeed, master *feeds.Feed) {
 
 	err := fetcher.FetchClient(feed.uri, client, nil)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("error fetching feed: %v", err)
 	}
 }
 
