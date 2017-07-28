@@ -22,7 +22,7 @@ var sourceFeeds = []sourceFeed{
 	{uri: "http://simplecast.fm/podcasts/282/rss", name: "The Bike Shed podcast"},
 	{uri: "http://simplecast.fm/podcasts/1088/rss", name: "Tentative podcast"},
 	{uri: "https://simplecast.com/podcasts/2025/rss", name: "The Laila and Brenda Show podcast"},
-	{uri: "https://upcase.com/the-weekly-iteration.rss", name: "The Weekly Iteration videos"},
+	{uri: "https://thoughtbot.com/upcase/the-weekly-iteration.rss", name: "The Weekly Iteration videos"},
 }
 
 func main() {
