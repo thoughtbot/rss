@@ -1,7 +1,5 @@
-dependencies:
-  pre:
-    - go get -u github.com/kardianos/govendor
-
 test:
   override:
-    - bin/vet && govendor test +local -v -race
+    - go test -v -race ./...
+  pre:
+    - go vet ./...

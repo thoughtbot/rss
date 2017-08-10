@@ -3,10 +3,10 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "Biz2c0OxOX2qeMLc66oeHlsg4K8=",
+			"checksumSHA1": "eghrgRs1Yvx1kWHj1vqqydnVmiU=",
 			"path": "github.com/gorilla/feeds",
-			"revision": "441264de03a8117ed530ae8e049d8f601a33a099",
-			"revisionTime": "2016-02-07T16:22:05Z"
+			"revision": "fa8f5548eedbe306d748925237a48d70ae4150de",
+			"revisionTime": "2017-06-11T03:22:06Z"
 		},
 		{
 			"checksumSHA1": "0BML3eN8Nu7aMthd0H6Ze9WwNcs=",
