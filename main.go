@@ -17,10 +17,10 @@ var podcastEpisodePrefix = regexp.MustCompile(`^\d+: `)
 
 var sourceFeeds = []sourceFeed{
 	{uri: "https://robots.thoughtbot.com/summaries.xml", name: "Giant Robots blog"},
-	{uri: "http://simplecast.fm/podcasts/271/rss", name: "Giant Robots podcast"},
-	{uri: "http://simplecast.fm/podcasts/272/rss", name: "Build Phase podcast"},
-	{uri: "http://simplecast.fm/podcasts/282/rss", name: "The Bike Shed podcast"},
-	{uri: "http://simplecast.fm/podcasts/1088/rss", name: "Tentative podcast"},
+	{uri: "https://rss.simplecast.fm/podcasts/271/rss", name: "Giant Robots podcast"},
+	{uri: "https://rss.simplecast.fm/podcasts/272/rss", name: "Build Phase podcast"},
+	{uri: "https://rss.simplecast.fm/podcasts/282/rss", name: "The Bike Shed podcast"},
+	{uri: "https://rss.simplecast.fm/podcasts/1088/rss", name: "Tentative podcast"},
 	{uri: "https://thoughtbot.com/upcase/the-weekly-iteration.rss", name: "The Weekly Iteration videos"},
 	{uri: "https://hub.thoughtbot.com/releases.atom", name: "Open source software releases"},
 }
