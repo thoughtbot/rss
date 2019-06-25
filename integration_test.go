@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/gorilla/feeds"
-	rss "github.com/jteeuwen/go-pkg-rss"
+	rss "github.com/mattn/go-pkg-rss"
 )
 
 func TestRSSHandler(t *testing.T) {
