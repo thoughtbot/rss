@@ -1,25 +1,28 @@
 {
-	"comment": "",
-	"ignore": "test",
-	"package": [
-		{
-			"checksumSHA1": "eghrgRs1Yvx1kWHj1vqqydnVmiU=",
-			"path": "github.com/gorilla/feeds",
-			"revision": "fa8f5548eedbe306d748925237a48d70ae4150de",
-			"revisionTime": "2017-06-11T03:22:06Z"
-		},
-		{
-			"checksumSHA1": "M9g4Eqb2f5R56JI8lraVHWcbRfg=",
-			"path": "github.com/mattn/go-pkg-rss",
-			"revision": "cb3c88c0b82e6cb1691c2620beda2a44f43d4217",
-			"revisionTime": "2018-02-08T00:54:46Z"
-		},
-		{
-			"checksumSHA1": "AGOlEDLFdG0YNEE+3aWu3DPEYz8=",
-			"path": "github.com/mattn/go-pkg-xmlx",
-			"revision": "db53493302d1dfcc6b9f16016e3c43cedaf5213d",
-			"revisionTime": "2018-02-08T00:52:05Z"
-		}
-	],
-	"rootPath": "github.com/thoughtbot/rss"
+  "comment": "",
+  "ignore": "test",
+  "package": [
+    {
+      "checksumSHA1": "eghrgRs1Yvx1kWHj1vqqydnVmiU=",
+      "path": "github.com/gorilla/feeds",
+      "revision": "fa8f5548eedbe306d748925237a48d70ae4150de",
+      "revisionTime": "2017-06-11T03:22:06Z"
+    },
+    {
+      "checksumSHA1": "M9g4Eqb2f5R56JI8lraVHWcbRfg=",
+      "path": "github.com/mattn/go-pkg-rss",
+      "revision": "cb3c88c0b82e6cb1691c2620beda2a44f43d4217",
+      "revisionTime": "2018-02-08T00:54:46Z"
+    },
+    {
+      "checksumSHA1": "AGOlEDLFdG0YNEE+3aWu3DPEYz8=",
+      "path": "github.com/mattn/go-pkg-xmlx",
+      "revision": "db53493302d1dfcc6b9f16016e3c43cedaf5213d",
+      "revisionTime": "2018-02-08T00:52:05Z"
+    }
+  ],
+  "rootPath": "github.com/thoughtbot/rss",
+  "heroku": {
+    "goVersion": "go1.12.6"
+  }
 }
