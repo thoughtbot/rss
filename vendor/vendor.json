@@ -9,16 +9,16 @@
 			"revisionTime": "2017-06-11T03:22:06Z"
 		},
 		{
-			"checksumSHA1": "0BML3eN8Nu7aMthd0H6Ze9WwNcs=",
-			"path": "github.com/jteeuwen/go-pkg-rss",
-			"revision": "72391e6fd7384785fa3c46a405214a616d6c4a1d",
-			"revisionTime": "2015-12-01T01:30:05Z"
+			"checksumSHA1": "M9g4Eqb2f5R56JI8lraVHWcbRfg=",
+			"path": "github.com/mattn/go-pkg-rss",
+			"revision": "cb3c88c0b82e6cb1691c2620beda2a44f43d4217",
+			"revisionTime": "2018-02-08T00:54:46Z"
 		},
 		{
-			"checksumSHA1": "XFra3ZlOkhp/C8FUxTuQnkitKI8=",
-			"path": "github.com/jteeuwen/go-pkg-xmlx",
-			"revision": "76f54ee73233b171ca9ee82ef837a1fc4d3809c0",
-			"revisionTime": "2015-12-01T01:29:46Z"
+			"checksumSHA1": "AGOlEDLFdG0YNEE+3aWu3DPEYz8=",
+			"path": "github.com/mattn/go-pkg-xmlx",
+			"revision": "db53493302d1dfcc6b9f16016e3c43cedaf5213d",
+			"revisionTime": "2018-02-08T00:52:05Z"
 		}
 	],
 	"rootPath": "github.com/thoughtbot/rss"
