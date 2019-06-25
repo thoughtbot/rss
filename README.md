@@ -1,45 +1,36 @@
-RSS
-===
+# RSS
 
 > All the thoughts fit to bot.
 
-An RSS feed at [rss.thoughtbot.com](https://rss.thoughtbot.com)
-which combines our blog's, podcasts', and open source software releases'
-RSS feeds into one feed for the past week's worth of content.
+An RSS feed at [rss.thoughtbot.com] which combines our blog, podcast, and open
+source software release RSS feeds into one feed for the past week's content.
 
 Used as the data source for our weekly newsletter.
 
-Contributing
-------------
+## Contributing
 
-See the [CONTRIBUTING] document.
-Thank you, [contributors]!
+See the [CONTRIBUTING] document. Thank you, [contributors]!
 
-  [CONTRIBUTING]: CONTRIBUTING.md
-  [contributors]: https://github.com/thoughtbot/rss/graphs/contributors
+## License
 
-License
--------
+RSS is Copyright (c) 2015-2017 thoughtbot, inc. It is free software, and may be
+redistributed under the terms specified in the [LICENSE] file.
 
-RSS is Copyright (c) 2015-2017 thoughtbot, inc.
-It is free software,
-and may be redistributed under the terms specified in the [LICENSE] file.
-
-  [LICENSE]: /LICENSE
-
-About
------
+## About
 
 RSS is maintained by Dan Croak and Bernerd Schaefer.
 
 [![thoughtbot](http://presskit.thoughtbot.com/images/thoughtbot-logo-for-readmes.svg)][go]
 
-RSS is maintained and funded by thoughtbot, inc.
-The names and logos for thoughtbot are trademarks of thoughtbot, inc.
+RSS is maintained and funded by thoughtbot, inc. The names and logos for
+thoughtbot are trademarks of thoughtbot, inc.
 
-We love open source software!
-See [our other Go projects][go]
-or [hire us][hire] to help build your product.
+We love open source software! See [our other Go projects][go] or [hire us][hire]
+to help build your product.
 
-  [go]: https://thoughtbot.com/services/go?utm_source=github
-  [hire]: https://thoughtbot.com/hire-us?utm_source=github
+[contributing]: CONTRIBUTING.md
+[contributors]: https://github.com/thoughtbot/rss/graphs/contributors
+[go]: https://thoughtbot.com/services/go?utm_source=github
+[hire]: https://thoughtbot.com/hire-us?utm_source=github
+[license]: /LICENSE
+[rss.thoughtbot.com]: https://rss.thoughtbot.com
