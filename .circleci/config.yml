@@ -1,0 +1,27 @@
+version: 2.0
+jobs:
+  build:
+    working_directory: /go/src/github.com/thoughtbot/rss
+
+    docker:
+      - image: circleci/golang:1.12.6
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-thoughtbot-rss-cache
+
+      - run:
+          name: Go get
+          command: 'go get'
+
+      - run:
+          name: Go test
+          command: 'go test -v'
+
+      - save_cache:
+          key: v1-thoughtbot-rss-cache
+          paths:
+            - "/go/pkg"
