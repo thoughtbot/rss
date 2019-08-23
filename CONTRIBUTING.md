@@ -13,19 +13,13 @@ issue trackers, chatrooms, and mailing lists.
 
 Fork the repo.
 
-Get a working [Go installation],
-and clone the project into your [Go work environment]
-(that is, `$GOPATH/src/github.com/thoughtbot/rss`).
+Get a working [Go installation] and clone the project:
 
   [Go installation]: http://golang.org/doc/install
-  [Go work environment]: http://golang.org/doc/code.html
 
 Run `./bin/setup` to install the project's dependencies.
 
-If you add or update a dependency,
-run `./bin/setup` again to vendor the changes.
-
-To test the `rss` package, run `govendor test +local`.
+To test the `rss` package, run `go test -v ./...`.
 
 Make your change, with new passing tests.
 

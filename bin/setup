@@ -2,12 +2,8 @@
 
 set -e
 
-# Install and initialize govendor
-go get -u github.com/kardianos/govendor
-govendor init
-
-# Update Go dependencies
-govendor sync
+# Get dependencies
+go get -u ./...
 
 # Only if this isn't CI
 if [ -z "$CI" ]; then

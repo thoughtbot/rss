@@ -1,0 +1,6 @@
+github.com/gorilla/feeds v0.0.0-20170611032206-fa8f5548eedb h1:ry27SfzOHgpUX1TXYh1W/kOUM7J+K8MdpRygT0DtHy0=
+github.com/gorilla/feeds v0.0.0-20170611032206-fa8f5548eedb/go.mod h1:Nk0jZrvPFZX1OBe5NPiddPw7CfwF6Q9eqzaBbaightA=
+github.com/mattn/go-pkg-rss v0.0.0-20180208005446-cb3c88c0b82e h1:8i881aaEvrd0YvREvVDnzpRIy6iBMx7yg4/d0fMcQX4=
+github.com/mattn/go-pkg-rss v0.0.0-20180208005446-cb3c88c0b82e/go.mod h1:OWvwUgdpV1+T+Fb7DqMhavbKo6fRxvvXFhkLl9Mrabc=
+github.com/mattn/go-pkg-xmlx v0.0.0-20180208005205-db53493302d1 h1:eQlraMPqzwTnbVvXCjYc7qtM4YD28Jzpi+yJpRoEXuY=
+github.com/mattn/go-pkg-xmlx v0.0.0-20180208005205-db53493302d1/go.mod h1:XWCh1U/xVm5fUTUjyl3JJ83f1xLyJRMuwH0T1HYNgsA=
