@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"flag"
 	"fmt"
 	"log"
@@ -132,24 +131,12 @@ func stripPodcastEpisodePrefix(s string) string {
 	return podcastEpisodePrefix.ReplaceAllString(s, "")
 }
 
-func getItunesSummary(item *rss.Item) (string, error) {
-	const itunesExtensionName = "http://www.itunes.com/dtds/podcast-1.0.dtd"
-	var extensions = item.Extensions
-
-	if itExt, ok := extensions[itunesExtensionName]; ok {
-		return itExt["summary"][0].Value, nil
-	}
-
-	return "", errors.New("itunes extension not present")
-}
-
 func getDescription(item *rss.Item) string {
-	itunesSummary, err := getItunesSummary(item)
-	if err != nil {
-		return item.Description
+	if ext, ok := item.Extensions["http://www.itunes.com/dtds/podcast-1.0.dtd"]; ok {
+		return ext["summary"][0].Value
 	}
 
-	return itunesSummary
+	return item.Description
 }
 
 type sourceFeed struct {
