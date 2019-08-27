@@ -21,28 +21,28 @@ func TestStripPodcastEpisodePrefix(t *testing.T) {
 }
 
 func TestGetDescription(t *testing.T) {
-	itemWithoutItunesSummary := &rss.Item{
-		Description: "description!",
+	want := "from description"
+	item := &rss.Item{
+		Description: want,
 	}
-	got := getDescription(itemWithoutItunesSummary)
-	want := itemWithoutItunesSummary.Description
+	got := getDescription(item)
 	if got != want {
-		t.Errorf("getDescription(%v) = %q; want %q", itemWithoutItunesSummary, got, want)
+		t.Errorf("getDescription(%v) = %q; want %q", item, got, want)
 	}
 
-	extensions := map[string]map[string][]rss.Extension{
+	want = "from itunes"
+	item = &rss.Item{Extensions: map[string]map[string][]rss.Extension{
 		"http://www.itunes.com/dtds/podcast-1.0.dtd": map[string][]rss.Extension{
 			"summary": []rss.Extension{
 				{
-					Value: "dude",
+					Value: want,
 				},
 			},
 		},
+	},
 	}
-	itemWithItunesSummary := &rss.Item{Extensions: extensions}
-	got = getDescription(itemWithItunesSummary)
-	want = "dude"
+	got = getDescription(item)
 	if got != want {
-		t.Errorf("getDescription(%v) = %q; want %q", itemWithItunesSummary, got, want)
+		t.Errorf("getDescription(%v) = %q; want %q", item, got, want)
 	}
 }
