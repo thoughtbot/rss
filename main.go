@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"log"
@@ -103,7 +104,7 @@ func makeHandler(master *feeds.Feed, sourceName string) rss.ItemHandlerFunc {
 				item := &feeds.Item{
 					Title:       stripPodcastEpisodePrefix(items[i].Title),
 					Link:        &feeds.Link{Href: items[i].Links[0].Href},
-					Description: items[i].Description,
+					Description: getDescription(items[i]),
 					Author:      &feeds.Author{Name: sourceName},
 					Created:     published,
 				}
@@ -129,6 +130,26 @@ func (s byCreated) Less(i, j int) bool {
 
 func stripPodcastEpisodePrefix(s string) string {
 	return podcastEpisodePrefix.ReplaceAllString(s, "")
+}
+
+func getItunesSummary(item *rss.Item) (string, error) {
+	const itunesExtensionName = "http://www.itunes.com/dtds/podcast-1.0.dtd"
+	var extensions = item.Extensions
+
+	if itExt, ok := extensions[itunesExtensionName]; ok {
+		return itExt["summary"][0].Value, nil
+	}
+
+	return "", errors.New("itunes extension not present")
+}
+
+func getDescription(item *rss.Item) string {
+	itunesSummary, err := getItunesSummary(item)
+	if err != nil {
+		return item.Description
+	}
+
+	return itunesSummary
 }
 
 type sourceFeed struct {
