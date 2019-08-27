@@ -13,12 +13,10 @@ See the [CONTRIBUTING] document. Thank you, [contributors]!
 
 ## License
 
-RSS is Copyright (c) 2015-2017 thoughtbot, inc. It is free software, and may be
+RSS is Copyright (c) 2015-2019 thoughtbot, inc. It is free software, and may be
 redistributed under the terms specified in the [LICENSE] file.
 
 ## About
-
-RSS is maintained by Dan Croak and Bernerd Schaefer.
 
 [![thoughtbot](http://presskit.thoughtbot.com/images/thoughtbot-logo-for-readmes.svg)][go]
 
