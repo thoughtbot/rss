@@ -103,7 +103,7 @@ func makeHandler(master *feeds.Feed, sourceName string) rss.ItemHandlerFunc {
 				item := &feeds.Item{
 					Title:       stripPodcastEpisodePrefix(items[i].Title),
 					Link:        &feeds.Link{Href: items[i].Links[0].Href},
-					Description: items[i].Description,
+					Description: getDescription(items[i]),
 					Author:      &feeds.Author{Name: sourceName},
 					Created:     published,
 				}
@@ -129,6 +129,14 @@ func (s byCreated) Less(i, j int) bool {
 
 func stripPodcastEpisodePrefix(s string) string {
 	return podcastEpisodePrefix.ReplaceAllString(s, "")
+}
+
+func getDescription(item *rss.Item) string {
+	if ext, ok := item.Extensions["http://www.itunes.com/dtds/podcast-1.0.dtd"]; ok {
+		return ext["summary"][0].Value
+	}
+
+	return item.Description
 }
 
 type sourceFeed struct {
