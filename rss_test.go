@@ -33,7 +33,7 @@ func TestGetDescription(t *testing.T) {
 	want = "from itunes"
 	item = &rss.Item{Extensions: map[string]map[string][]rss.Extension{
 		"http://www.itunes.com/dtds/podcast-1.0.dtd": map[string][]rss.Extension{
-			"summary": []rss.Extension{
+			"subtitle": []rss.Extension{
 				{
 					Value: want,
 				},
