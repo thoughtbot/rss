@@ -133,7 +133,7 @@ func stripPodcastEpisodePrefix(s string) string {
 
 func getDescription(item *rss.Item) string {
 	if ext, ok := item.Extensions["http://www.itunes.com/dtds/podcast-1.0.dtd"]; ok {
-		return ext["summary"][0].Value
+		return ext["subtitle"][0].Value
 	}
 
 	return item.Description
