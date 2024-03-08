@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> This application has been replaced with a Zapier Zap.
+
 # RSS
 
 > All the thoughts fit to bot.
